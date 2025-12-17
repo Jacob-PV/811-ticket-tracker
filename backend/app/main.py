@@ -41,11 +41,11 @@ app = FastAPI(
     lifespan=lifespan
 )
 
-# Configure CORS - Allow all Vercel deployments
+# Configure CORS - TEMPORARY: Allow all origins for testing
 app.add_middleware(
     CORSMiddleware,
-    allow_origin_regex=r"^https://811-ticket-tracker-.*\.vercel\.app$",
-    allow_credentials=True,
+    allow_origins=["*"],  # Allow all origins during development
+    allow_credentials=False,  # Can't use credentials with allow_origins=["*"]
     allow_methods=["*"],
     allow_headers=["*"],
 )
