@@ -5,22 +5,25 @@ API dependencies for authentication and database access.
 from fastapi import Depends, HTTPException, status
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from sqlalchemy.orm import Session
-from typing import Generator
+from typing import Generator, Optional
 import jwt
+import uuid
 from app.database import get_db
 from app.models.user import User
 from app.utils.security import decode_access_token
 from app.config import settings
 
-security = HTTPBearer()
+security = HTTPBearer(auto_error=False)  # Don't auto-error if no token
 
 
 def get_current_user(
-    credentials: HTTPAuthorizationCredentials = Depends(security),
+    credentials: Optional[HTTPAuthorizationCredentials] = Depends(security),
     db: Session = Depends(get_db)
 ) -> User:
     """
     Get the current authenticated user from JWT token.
+
+    TEMPORARY: If no token provided, return/create a test admin user for development.
 
     Args:
         credentials: HTTP Bearer credentials containing the JWT token
@@ -32,6 +35,30 @@ def get_current_user(
     Raises:
         HTTPException: If token is invalid or user not found
     """
+    # TEMPORARY BYPASS: If no credentials, use test user
+    if credentials is None:
+        print("⚠️  AUTH BYPASS: No token provided, using test admin user")
+
+        # Check if test user exists
+        test_user = db.query(User).filter(User.email == "test@admin.com").first()
+
+        if not test_user:
+            # Create test admin user
+            test_user = User(
+                id=uuid.uuid4(),
+                email="test@admin.com",
+                full_name="Test Admin",
+                role="admin",
+                is_active=True
+            )
+            db.add(test_user)
+            db.commit()
+            db.refresh(test_user)
+            print("✅ Created test admin user: test@admin.com")
+
+        return test_user
+
+    # Normal authentication flow
     token = credentials.credentials
 
     try:
