@@ -1,4 +1,5 @@
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr, field_serializer
+from uuid import UUID
 
 
 class MagicLinkRequest(BaseModel):
@@ -6,10 +7,14 @@ class MagicLinkRequest(BaseModel):
 
 
 class UserInToken(BaseModel):
-    id: str
+    id: UUID | str  # Accept both UUID and string
     email: str
     full_name: str
     role: str
+
+    @field_serializer('id')
+    def serialize_id(self, value, _info):
+        return str(value)  # Always serialize to string
 
 
 class TokenResponse(BaseModel):

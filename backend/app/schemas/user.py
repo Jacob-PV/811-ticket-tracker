@@ -1,6 +1,7 @@
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr, field_serializer
 from typing import Optional
 from datetime import datetime
+from uuid import UUID
 
 
 class UserBase(BaseModel):
@@ -20,10 +21,14 @@ class UserUpdate(BaseModel):
 
 
 class UserResponse(UserBase):
-    id: str
+    id: UUID | str  # Accept both UUID and string
     is_active: bool
     created_at: datetime
     updated_at: Optional[datetime] = None
+
+    @field_serializer('id')
+    def serialize_id(self, value, _info):
+        return str(value)  # Always serialize to string
 
     class Config:
         from_attributes = True
