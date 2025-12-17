@@ -1,18 +1,16 @@
 """
 Email service for sending magic links and notifications.
+Uses SendGrid HTTP API (more reliable than SMTP on cloud platforms).
 """
 
-import aiosmtplib
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
-from jinja2 import Template
+import httpx
 from typing import List
 from app.config import settings
 
 
 async def send_email(to: str, subject: str, html_body: str):
     """
-    Send an email using SMTP.
+    Send an email using SendGrid HTTP API.
 
     Args:
         to: Recipient email address
@@ -20,30 +18,48 @@ async def send_email(to: str, subject: str, html_body: str):
         html_body: HTML content of the email
     """
     try:
-        # Create message
-        message = MIMEMultipart("alternative")
-        message["Subject"] = subject
-        message["From"] = f"{settings.SMTP_FROM_NAME} <{settings.SMTP_FROM_EMAIL}>"
-        message["To"] = to
+        # SendGrid API endpoint
+        url = "https://api.sendgrid.com/v3/mail/send"
 
-        # Add HTML body
-        html_part = MIMEText(html_body, "html")
-        message.attach(html_part)
+        # Prepare email data
+        data = {
+            "personalizations": [
+                {
+                    "to": [{"email": to}],
+                    "subject": subject
+                }
+            ],
+            "from": {
+                "email": settings.SMTP_FROM_EMAIL,
+                "name": settings.SMTP_FROM_NAME
+            },
+            "content": [
+                {
+                    "type": "text/html",
+                    "value": html_body
+                }
+            ]
+        }
 
-        # Send email
-        if settings.SMTP_HOST and settings.SMTP_PORT:
-            await aiosmtplib.send(
-                message,
-                hostname=settings.SMTP_HOST,
-                port=settings.SMTP_PORT,
-                username=settings.SMTP_USER if settings.SMTP_USER else None,
-                password=settings.SMTP_PASSWORD if settings.SMTP_PASSWORD else None,
-                use_tls=settings.SMTP_USE_TLS,
-            )
+        # Headers with API key
+        headers = {
+            "Authorization": f"Bearer {settings.SMTP_PASSWORD}",  # SendGrid API key
+            "Content-Type": "application/json"
+        }
+
+        # Send via HTTP POST
+        async with httpx.AsyncClient() as client:
+            response = await client.post(url, json=data, headers=headers, timeout=10.0)
+            response.raise_for_status()
+
+        print(f"✅ Email sent successfully to {to}")
+
+    except httpx.HTTPStatusError as e:
+        print(f"❌ SendGrid API error: {e.response.status_code} - {e.response.text}")
+        raise Exception(f"Failed to send email: {e.response.text}")
     except Exception as e:
-        print(f"Error sending email: {e}")
-        # In development, just print the error
-        # In production, you'd want to log this properly
+        print(f"❌ Error sending email: {e}")
+        raise
 
 
 async def send_magic_link_email(email: str, magic_link_url: str):
