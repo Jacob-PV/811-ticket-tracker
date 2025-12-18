@@ -161,21 +161,23 @@ export default function TicketList() {
       {/* Create Modal */}
       {showCreateModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center px-4 py-4 z-50">
-          <div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto px-6 py-6">
-            <div className="flex justify-between items-center mb-4">
-              <h2 className="text-2xl font-bold">Create New Ticket</h2>
-              <button
-                onClick={() => setShowCreateModal(false)}
-                className="text-gray-500 hover:text-gray-700"
-              >
-                <X className="h-6 w-6" />
-              </button>
+          <div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="px-6 py-6">
+              <div className="flex justify-between items-center mb-4">
+                <h2 className="text-2xl font-bold">Create New Ticket</h2>
+                <button
+                  onClick={() => setShowCreateModal(false)}
+                  className="text-gray-500 hover:text-gray-700"
+                >
+                  <X className="h-6 w-6" />
+                </button>
+              </div>
+              <TicketForm
+                onSubmit={handleCreateTicket}
+                onCancel={() => setShowCreateModal(false)}
+                loading={createTicket.isPending}
+              />
             </div>
-            <TicketForm
-              onSubmit={handleCreateTicket}
-              onCancel={() => setShowCreateModal(false)}
-              loading={createTicket.isPending}
-            />
           </div>
         </div>
       )}
@@ -183,79 +185,81 @@ export default function TicketList() {
       {/* Renew Modal */}
       {showRenewModal && selectedTicket && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center px-4 py-4 z-50">
-          <div className="bg-white rounded-lg max-w-lg w-full px-6 py-6">
-            <div className="flex justify-between items-center mb-4">
-              <h2 className="text-2xl font-bold">Renew Ticket</h2>
-              <button
-                onClick={() => setShowRenewModal(false)}
-                className="text-gray-500 hover:text-gray-700"
-              >
-                <X className="h-6 w-6" />
-              </button>
-            </div>
+          <div className="bg-white rounded-lg max-w-lg w-full">
+            <div className="px-6 py-6">
+              <div className="flex justify-between items-center mb-4">
+                <h2 className="text-2xl font-bold">Renew Ticket</h2>
+                <button
+                  onClick={() => setShowRenewModal(false)}
+                  className="text-gray-500 hover:text-gray-700"
+                >
+                  <X className="h-6 w-6" />
+                </button>
+              </div>
 
-            <Alert type="success" className="mb-4">
-              Ticket info ready to paste into 811 portal!
-            </Alert>
+              <Alert type="success" className="mb-4">
+                Ticket info ready to paste into 811 portal!
+              </Alert>
 
-            <div className="bg-gray-50 rounded p-4 mb-4 font-mono text-sm">
-              <p>Ticket: {selectedTicket.ticket_number}</p>
-              <p>Address: {selectedTicket.address}</p>
-              <p>Scope: {selectedTicket.job_name}</p>
-            </div>
+              <div className="bg-gray-50 rounded p-4 mb-4 font-mono text-sm">
+                <p>Ticket: {selectedTicket.ticket_number}</p>
+                <p>Address: {selectedTicket.address}</p>
+                <p>Scope: {selectedTicket.job_name}</p>
+              </div>
 
-            <div className="flex gap-2 mb-4">
-              <Button
-                variant="secondary"
-                size="sm"
-                onClick={() => handleCopyTicketInfo(selectedTicket)}
-                className="flex-1"
-              >
-                <Copy className="h-4 w-4 mr-1" />
-                Copy Info
-              </Button>
-              <Button
-                variant="secondary"
-                size="sm"
-                onClick={() => openPortal(selectedTicket.state)}
-                className="flex-1"
-              >
-                <ExternalLink className="h-4 w-4 mr-1" />
-                Open {selectedTicket.state} 811
-              </Button>
-            </div>
+              <div className="flex gap-2 mb-4">
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  onClick={() => handleCopyTicketInfo(selectedTicket)}
+                  className="flex-1"
+                >
+                  <Copy className="h-4 w-4 mr-1" />
+                  Copy Info
+                </Button>
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  onClick={() => openPortal(selectedTicket.state)}
+                  className="flex-1"
+                >
+                  <ExternalLink className="h-4 w-4 mr-1" />
+                  Open {selectedTicket.state} 811
+                </Button>
+              </div>
 
-            <div className="border-t pt-4">
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                New Expiration Date
-              </label>
-              <input
-                type="date"
-                value={renewDate}
-                onChange={(e) => setRenewDate(e.target.value)}
-                className="w-full max-w-full px-2 sm:px-3 md:px-4 py-2 sm:py-2.5 min-h-[48px] border border-gray-300 rounded-md text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-primary-500"
-              />
-              <p className="text-sm text-gray-500 mt-1">
-                Suggested: 30 days from today
-              </p>
-            </div>
+              <div className="border-t pt-4">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  New Expiration Date
+                </label>
+                <input
+                  type="date"
+                  value={renewDate}
+                  onChange={(e) => setRenewDate(e.target.value)}
+                  className="w-full max-w-full px-2 sm:px-3 md:px-4 py-2 sm:py-2.5 min-h-[48px] border border-gray-300 rounded-md text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-primary-500"
+                />
+                <p className="text-sm text-gray-500 mt-1">
+                  Suggested: 30 days from today
+                </p>
+              </div>
 
-            <div className="flex gap-3 mt-6">
-              <Button
-                variant="secondary"
-                onClick={() => setShowRenewModal(false)}
-                className="flex-1"
-              >
-                Cancel
-              </Button>
-              <Button
-                variant="primary"
-                onClick={handleRenewSubmit}
-                loading={renewTicket.isPending}
-                className="flex-1"
-              >
-                Save Renewal
-              </Button>
+              <div className="flex gap-3 mt-6">
+                <Button
+                  variant="secondary"
+                  onClick={() => setShowRenewModal(false)}
+                  className="flex-1"
+                >
+                  Cancel
+                </Button>
+                <Button
+                  variant="primary"
+                  onClick={handleRenewSubmit}
+                  loading={renewTicket.isPending}
+                  className="flex-1"
+                >
+                  Save Renewal
+                </Button>
+              </div>
             </div>
           </div>
         </div>
