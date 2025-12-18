@@ -4,7 +4,7 @@
 
 import { useState } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
-import { useTicket } from '../hooks/useTickets';
+import { useTicket, useTickets } from '../hooks/useTickets';
 import { useAuth } from '../hooks/useAuth';
 import { tickets as ticketsAPI } from '../lib/api';
 import { formatDate } from '../utils/dateUtils';
@@ -19,11 +19,11 @@ export default function TicketDetail() {
   const navigate = useNavigate();
   const { user } = useAuth();
   const { data: ticket, isLoading, error } = useTicket(id);
+  const { deleteTicket } = useTickets();
 
   const [isEditing, setIsEditing] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [isDeleting, setIsDeleting] = useState(false);
   const [saveError, setSaveError] = useState(null);
 
   const handleUpdate = async (formData) => {
@@ -42,16 +42,13 @@ export default function TicketDetail() {
   };
 
   const handleDelete = async () => {
-    setIsDeleting(true);
-
     try {
-      await ticketsAPI.delete(id);
+      await deleteTicket.mutateAsync(id);
       navigate('/tickets', {
         state: { message: 'Ticket deleted successfully!' }
       });
     } catch (err) {
       alert('Failed to delete ticket: ' + err.message);
-      setIsDeleting(false);
       setShowDeleteModal(false);
     }
   };
@@ -171,7 +168,7 @@ export default function TicketDetail() {
               <button
                 onClick={() => setShowDeleteModal(false)}
                 className="text-gray-500 hover:text-gray-700"
-                disabled={isDeleting}
+                disabled={deleteTicket.isPending}
               >
                 <X className="h-6 w-6" />
               </button>
@@ -205,7 +202,7 @@ export default function TicketDetail() {
               <Button
                 variant="secondary"
                 onClick={() => setShowDeleteModal(false)}
-                disabled={isDeleting}
+                disabled={deleteTicket.isPending}
                 className="flex-1"
               >
                 Cancel
@@ -213,7 +210,7 @@ export default function TicketDetail() {
               <Button
                 variant="danger"
                 onClick={handleDelete}
-                loading={isDeleting}
+                loading={deleteTicket.isPending}
                 className="flex-1"
               >
                 Delete Ticket

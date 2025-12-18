@@ -10,11 +10,12 @@ export default function Input({
   ...props
 }) {
   const inputClasses = `
-    w-full px-4 py-2.5 min-h-[48px] text-base
+    w-full max-w-full px-4 py-2.5 min-h-[48px] text-base
     border rounded-md
     focus:outline-none focus:ring-2 focus:ring-primary-500
     disabled:bg-gray-100 disabled:cursor-not-allowed
     ${error ? 'border-red-500' : 'border-gray-300'}
+    ${props.type === 'date' ? 'text-sm sm:text-base' : ''}
   `;
 
   return (
