@@ -233,7 +233,7 @@ export default function TicketList() {
                 type="date"
                 value={renewDate}
                 onChange={(e) => setRenewDate(e.target.value)}
-                className="w-full max-w-full pl-2 pr-16 sm:pl-3 sm:pr-20 md:pl-4 md:pr-24 py-2 sm:py-2.5 min-h-[48px] border border-gray-300 rounded-md text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-primary-500"
+                className="w-full max-w-full px-2 sm:px-3 md:px-4 py-2 sm:py-2.5 min-h-[48px] border border-gray-300 rounded-md text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-primary-500"
               />
               <p className="text-sm text-gray-500 mt-1">
                 Suggested: 30 days from today
