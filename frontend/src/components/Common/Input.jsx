@@ -18,7 +18,7 @@ export default function Input({
     focus:outline-none focus:ring-2 focus:ring-primary-500
     disabled:bg-gray-100 disabled:cursor-not-allowed
     ${error ? 'border-red-500' : 'border-gray-300'}
-    ${isDateInput ? 'pl-2 pr-2 sm:pl-3 sm:pr-3 md:pl-4 md:pr-4 py-2 sm:py-2.5 text-sm sm:text-base' : 'px-4 py-2.5'}
+    ${isDateInput ? 'pl-2 pr-8 sm:pl-3 sm:pr-10 md:pl-4 md:pr-12 py-2 sm:py-2.5 text-sm sm:text-base' : 'px-4 py-2.5'}
   `;
 
   return (
