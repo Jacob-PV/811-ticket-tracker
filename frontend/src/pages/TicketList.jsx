@@ -2,8 +2,8 @@
  * Ticket list page with filtering
  */
 
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useTickets } from '../hooks/useTickets';
 import { formatDateForInput } from '../utils/dateUtils';
 import TicketCard from '../components/Tickets/TicketCard';
@@ -14,8 +14,19 @@ import Alert from '../components/Common/Alert';
 import { Plus, X, Copy, ExternalLink } from 'lucide-react';
 
 export default function TicketList() {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [filters, setFilters] = useState({});
   const [showCreateModal, setShowCreateModal] = useState(false);
+
+  // Auto-open create modal if URL has ?create=true
+  useEffect(() => {
+    if (searchParams.get('create') === 'true') {
+      setShowCreateModal(true);
+      // Remove the parameter from URL
+      searchParams.delete('create');
+      setSearchParams(searchParams, { replace: true });
+    }
+  }, [searchParams, setSearchParams]);
   const [showRenewModal, setShowRenewModal] = useState(false);
   const [selectedTicket, setSelectedTicket] = useState(null);
   const [renewDate, setRenewDate] = useState('');

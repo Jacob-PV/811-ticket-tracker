@@ -58,7 +58,7 @@ export default function Dashboard() {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
-        <Link to="/tickets/new">
+        <Link to="/tickets?create=true">
           <Button variant="primary">
             + New Ticket
           </Button>
