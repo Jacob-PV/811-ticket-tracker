@@ -22,7 +22,7 @@ export default function Input({
   `;
 
   return (
-    <div className={`space-y-1 ${className} ${isDateInput ? 'overflow-hidden' : ''}`}>
+    <div className={`space-y-1 ${className}`}>
       {label && (
         <label className="block text-sm font-medium text-gray-700">
           {label}

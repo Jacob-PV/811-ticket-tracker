@@ -229,14 +229,12 @@ export default function TicketList() {
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 New Expiration Date
               </label>
-              <div className="overflow-hidden">
-                <input
-                  type="date"
-                  value={renewDate}
-                  onChange={(e) => setRenewDate(e.target.value)}
-                  className="w-full max-w-full px-2 sm:px-3 md:px-4 py-2 sm:py-2.5 border border-gray-300 rounded-md text-sm sm:text-base"
-                />
-              </div>
+              <input
+                type="date"
+                value={renewDate}
+                onChange={(e) => setRenewDate(e.target.value)}
+                className="w-full max-w-full px-2 sm:px-3 md:px-4 py-2 sm:py-2.5 min-h-[48px] border border-gray-300 rounded-md text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-primary-500"
+              />
               <p className="text-sm text-gray-500 mt-1">
                 Suggested: 30 days from today
               </p>
