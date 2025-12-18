@@ -8,24 +8,13 @@ This file tracks requested updates, bug fixes, and improvements for the 811 Tick
 
 ## Improvements & New Features
 
+- [ ] The Term of Use and Privacy Policy should have a "Back" button, it doesnt have to be that exeact wording. Pick whatever works best
+- [ ] When you click on a ticket category ("Expired", "Expiring Soon", "Active", "All" ) it should take you to the ticket page with that catagory selected. Currently it always takes you to the "All" category on the ticket page.
+- [ ] When you go the the "Renew" popup, it has text saying "Ticket info ready to paste into 811 portal!" as soon as you open the popup. That text should show up until the info has been copied.
+
 ---
 
 ## General Notes
-
-### Latest Update (v1.2.1) - Date Input Styling Fixes
-**Date**: 2025-12-18
-**Commits**: 27c27d5, bee8ada
-
-**Issues Fixed**:
-1. Date inputs had straight edge on right side due to overflow-hidden clipping rounded-md corners
-2. Padding not visually symmetric on left/right sides
-
-**Changes**:
-- Input.jsx: Removed overflow-hidden from parent div that was clipping corners
-- TicketList.jsx: Removed overflow-hidden wrapper div, added min-h-[48px] and focus styles to match State field
-- Input.jsx: Changed from px-* to explicit pl-* pr-* values for guaranteed symmetric padding
-- TicketList.jsx: Updated New Expiration Date field to use symmetric padding
-- Date inputs now have proper rounded corners and perfectly symmetric padding on all sides
 
 ---
 

@@ -27,9 +27,18 @@ export default function TicketList() {
       setSearchParams(searchParams, { replace: true });
     }
   }, [searchParams, setSearchParams]);
+
+  // Set initial filter from URL query params
+  useEffect(() => {
+    const status = searchParams.get('status');
+    if (status) {
+      setFilters({ status });
+    }
+  }, [searchParams]);
   const [showRenewModal, setShowRenewModal] = useState(false);
   const [selectedTicket, setSelectedTicket] = useState(null);
   const [renewDate, setRenewDate] = useState('');
+  const [ticketInfoCopied, setTicketInfoCopied] = useState(false);
 
   const { tickets, isLoading, createTicket, renewTicket } = useTickets(filters);
   const navigate = useNavigate();
@@ -54,6 +63,7 @@ export default function TicketList() {
   const handleRenew = (ticket) => {
     setSelectedTicket(ticket);
     setShowRenewModal(true);
+    setTicketInfoCopied(false); // Reset copied state when opening modal
     // Calculate suggested renewal date (30 days from now)
     const suggestedDate = new Date();
     suggestedDate.setDate(suggestedDate.getDate() + 30);
@@ -78,6 +88,7 @@ export default function TicketList() {
   const handleCopyTicketInfo = (ticket) => {
     const ticketInfo = `Ticket Number: ${ticket.ticket_number}\nAddress: ${ticket.address}\nScope: ${ticket.job_name}`;
     navigator.clipboard.writeText(ticketInfo);
+    setTicketInfoCopied(true); // Show success message after copy
     alert('Ticket info copied to clipboard!');
   };
 
@@ -205,9 +216,11 @@ export default function TicketList() {
                 </button>
               </div>
 
-              <Alert type="success" className="mb-4">
-                Ticket info ready to paste into 811 portal!
-              </Alert>
+              {ticketInfoCopied && (
+                <Alert type="success" className="mb-4">
+                  Ticket info ready to paste into 811 portal!
+                </Alert>
+              )}
 
               <div className="bg-gray-50 rounded p-4 mb-4 font-mono text-sm">
                 <p>Ticket: {selectedTicket.ticket_number}</p>

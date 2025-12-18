@@ -2,9 +2,22 @@
  * Terms of Use page
  */
 
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft } from 'lucide-react';
+
 export default function Terms() {
+  const navigate = useNavigate();
+
   return (
     <div className="max-w-4xl mx-auto py-8 px-4">
+      <button
+        onClick={() => navigate(-1)}
+        className="flex items-center text-primary-600 hover:text-primary-700 mb-4 text-sm font-medium"
+      >
+        <ArrowLeft className="h-4 w-4 mr-1" />
+        Back
+      </button>
+
       <h1 className="text-3xl font-bold text-gray-900 mb-6">Terms of Use</h1>
 
       <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
