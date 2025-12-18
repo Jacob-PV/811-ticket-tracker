@@ -7,6 +7,12 @@ export default function Terms() {
     <div className="max-w-4xl mx-auto py-8 px-4">
       <h1 className="text-3xl font-bold text-gray-900 mb-6">Terms of Use</h1>
 
+      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+        <p className="text-sm text-blue-900 font-medium">
+          Independent beta product. Feedback does not create ownership, partnership, or work-for-hire relationships.
+        </p>
+      </div>
+
       <div className="prose prose-gray max-w-none space-y-4 text-gray-700">
         <p>
           This software is an independently developed tool owned and operated by Jacob VanDoren.
