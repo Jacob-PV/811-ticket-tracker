@@ -160,8 +160,8 @@ export default function TicketList() {
 
       {/* Create Modal */}
       {showCreateModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto p-6">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-3 sm:p-4 z-50">
+          <div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto p-4 sm:p-6">
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-2xl font-bold">Create New Ticket</h2>
               <button
@@ -182,8 +182,8 @@ export default function TicketList() {
 
       {/* Renew Modal */}
       {showRenewModal && selectedTicket && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-lg max-w-lg w-full p-6">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-3 sm:p-4 z-50">
+          <div className="bg-white rounded-lg max-w-lg w-full p-4 sm:p-6">
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-2xl font-bold">Renew Ticket</h2>
               <button
