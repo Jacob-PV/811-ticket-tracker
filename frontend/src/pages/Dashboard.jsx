@@ -4,7 +4,7 @@
 
 import { Link } from 'react-router-dom';
 import { useTicketStats } from '../hooks/useTickets';
-import { AlertCircle, Clock, FileText, CheckCircle, RefreshCw } from 'lucide-react';
+import { AlertCircle, Clock, FileText, CheckCircle, RefreshCw, Plus } from 'lucide-react';
 import LoadingSpinner from '../components/Common/LoadingSpinner';
 import Button from '../components/Common/Button';
 
@@ -60,7 +60,8 @@ export default function Dashboard() {
         <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
         <Link to="/tickets?create=true">
           <Button variant="primary">
-            + New Ticket
+            <Plus className="h-5 w-5 mr-2" />
+            New Ticket
           </Button>
         </Link>
       </div>
@@ -88,13 +89,13 @@ export default function Dashboard() {
       {stats && (
         <div className="bg-white rounded-lg border border-gray-200 p-6">
           <h2 className="text-xl font-semibold text-gray-900 mb-4">Quick Stats</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <h3 className="text-sm font-medium text-gray-600 mb-2">By State</h3>
               <div className="space-y-1">
                 {Object.entries(stats.tickets_by_state || {}).map(([state, count]) => (
-                  <div key={state} className="flex justify-between text-sm">
-                    <span className="text-gray-700">{state}:</span>
+                  <div key={state} className="flex items-center gap-3 text-sm">
+                    <span className="text-gray-700 min-w-[40px]">{state}:</span>
                     <span className="font-medium">{count}</span>
                   </div>
                 ))}

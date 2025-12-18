@@ -11,6 +11,7 @@ import Login from './pages/Login';
 import VerifyMagicLink from './pages/VerifyMagicLink';
 import Dashboard from './pages/Dashboard';
 import TicketList from './pages/TicketList';
+import TicketDetail from './pages/TicketDetail';
 
 // Create React Query client
 const queryClient = new QueryClient({
@@ -81,6 +82,16 @@ function App() {
                 <ProtectedRoute>
                   <AppLayout>
                     <TicketList />
+                  </AppLayout>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/tickets/:id"
+              element={
+                <ProtectedRoute>
+                  <AppLayout>
+                    <TicketDetail />
                   </AppLayout>
                 </ProtectedRoute>
               }
