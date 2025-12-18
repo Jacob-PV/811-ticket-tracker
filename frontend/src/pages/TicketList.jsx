@@ -40,10 +40,13 @@ export default function TicketList() {
       await createTicket.mutateAsync(formData);
       setShowCreateModal(false);
     } catch (err) {
-      console.error('Ticket creation error:', err);
-      console.error('Error response:', err.response?.data);
+      console.error('Full error object:', JSON.stringify(err, null, 2));
+      console.error('Error:', err);
+      console.error('Error response:', err.response);
+      console.error('Error data:', err.response?.data);
+      console.error('Error message:', err.message);
       const errorMsg = err.response?.data?.detail || err.message || 'Failed to create ticket';
-      alert(errorMsg);
+      alert(`Error: ${errorMsg}\n\nCheck console for details.`);
     }
   };
 
