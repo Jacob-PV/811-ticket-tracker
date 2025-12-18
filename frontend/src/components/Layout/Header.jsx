@@ -30,7 +30,7 @@ export default function Header() {
               811 Ticket Tracker
             </h1>
 
-            {/* Mobile only: Settings icon + Logout */}
+            {/* Mobile only: Settings icon */}
             <div className="flex items-center space-x-1 md:hidden">
               {user?.role === 'admin' && (
                 <Link
@@ -41,13 +41,6 @@ export default function Header() {
                   <Settings className="h-4 w-4" />
                 </Link>
               )}
-              <button
-                onClick={handleLogout}
-                className="flex items-center px-2 py-2 text-sm font-medium text-gray-700 hover:text-red-600 hover:bg-gray-100 rounded-md"
-                title="Logout"
-              >
-                <LogOut className="h-4 w-4" />
-              </button>
             </div>
           </div>
 
@@ -79,19 +72,12 @@ export default function Header() {
             )}
           </nav>
 
-          {/* Desktop only: Right column - User info + Logout */}
+          {/* Desktop only: Right column - User info */}
           <div className="hidden md:flex items-center justify-end space-x-4">
             <div className="text-sm text-gray-700">
               <div className="font-medium">{user?.full_name}</div>
               <div className="text-xs text-gray-500 capitalize">{user?.role}</div>
             </div>
-            <button
-              onClick={handleLogout}
-              className="flex items-center px-3 py-2 text-sm font-medium text-gray-700 hover:text-red-600 hover:bg-gray-100 rounded-md"
-            >
-              <LogOut className="h-4 w-4 mr-2" />
-              Logout
-            </button>
           </div>
         </div>
       </div>
