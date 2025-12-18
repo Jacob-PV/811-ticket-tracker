@@ -9,17 +9,20 @@ export default function Input({
   className = '',
   ...props
 }) {
+  // Special handling for date inputs on mobile
+  const isDateInput = props.type === 'date';
+
   const inputClasses = `
-    w-full max-w-full px-4 py-2.5 min-h-[48px] text-base
+    w-full max-w-full min-h-[48px] text-base
     border rounded-md
     focus:outline-none focus:ring-2 focus:ring-primary-500
     disabled:bg-gray-100 disabled:cursor-not-allowed
     ${error ? 'border-red-500' : 'border-gray-300'}
-    ${props.type === 'date' ? 'text-sm sm:text-base' : ''}
+    ${isDateInput ? 'px-2 sm:px-3 md:px-4 py-2 sm:py-2.5 text-sm sm:text-base' : 'px-4 py-2.5'}
   `;
 
   return (
-    <div className={`space-y-1 ${className}`}>
+    <div className={`space-y-1 ${className} ${isDateInput ? 'overflow-hidden' : ''}`}>
       {label && (
         <label className="block text-sm font-medium text-gray-700">
           {label}
