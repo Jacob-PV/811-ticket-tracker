@@ -36,17 +36,18 @@ export default function TicketList() {
 
   const handleCreateTicket = async (formData) => {
     try {
-      console.log('Submitting ticket data:', formData);
-      await createTicket.mutateAsync(formData);
+      // Convert empty string dates to null for backend
+      const cleanedData = {
+        ...formData,
+        expiration_date: formData.expiration_date || null,
+      };
+      console.log('Submitting ticket data:', cleanedData);
+      await createTicket.mutateAsync(cleanedData);
       setShowCreateModal(false);
     } catch (err) {
-      console.error('Full error object:', JSON.stringify(err, null, 2));
-      console.error('Error:', err);
-      console.error('Error response:', err.response);
-      console.error('Error data:', err.response?.data);
-      console.error('Error message:', err.message);
+      console.error('Ticket creation error:', err);
       const errorMsg = err.response?.data?.detail || err.message || 'Failed to create ticket';
-      alert(`Error: ${errorMsg}\n\nCheck console for details.`);
+      alert(errorMsg);
     }
   };
 
