@@ -8,13 +8,26 @@ This file tracks requested updates, bug fixes, and improvements for the 811 Tick
 
 ## Improvements & New Features
 
-- [ ] The Term of Use and Privacy Policy should have a "Back" button, it doesnt have to be that exeact wording. Pick whatever works best
-- [ ] When you click on a ticket category ("Expired", "Expiring Soon", "Active", "All" ) it should take you to the ticket page with that catagory selected. Currently it always takes you to the "All" category on the ticket page.
-- [ ] When you go the the "Renew" popup, it has text saying "Ticket info ready to paste into 811 portal!" as soon as you open the popup. That text should show up until the info has been copied.
-
 ---
 
 ## General Notes
+
+### Latest Update (v1.3.0) - Navigation and UX Improvements
+**Date**: 2025-12-18
+**Commit**: ea982ea
+
+**Improvements Implemented**:
+1. ✅ Added Back button to Terms and Privacy pages
+   - Uses browser history navigation (navigate(-1))
+   - Consistent ArrowLeft icon and styling
+
+2. ✅ Dashboard category cards now pre-select filter on Tickets page
+   - Clicking "Expired" card navigates to /tickets?status=expired
+   - TicketList reads status query param and applies filter on mount
+
+3. ✅ Renew modal success message shows only after copy
+   - "Ticket info ready to paste" appears after clicking Copy Info button
+   - Resets when modal reopens for better UX
 
 ---
 
