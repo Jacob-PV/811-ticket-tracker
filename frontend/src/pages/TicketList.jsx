@@ -89,7 +89,6 @@ export default function TicketList() {
     const ticketInfo = `Ticket Number: ${ticket.ticket_number}\nAddress: ${ticket.address}\nScope: ${ticket.job_name}`;
     navigator.clipboard.writeText(ticketInfo);
     setTicketInfoCopied(true); // Show success message after copy
-    alert('Ticket info copied to clipboard!');
   };
 
   const openPortal = (state) => {
