@@ -12,6 +12,7 @@ import VerifyMagicLink from './pages/VerifyMagicLink';
 import Dashboard from './pages/Dashboard';
 import TicketList from './pages/TicketList';
 import TicketDetail from './pages/TicketDetail';
+import Settings from './pages/Settings';
 
 // Create React Query client
 const queryClient = new QueryClient({
@@ -92,6 +93,16 @@ function App() {
                 <ProtectedRoute>
                   <AppLayout>
                     <TicketDetail />
+                  </AppLayout>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/settings"
+              element={
+                <ProtectedRoute>
+                  <AppLayout>
+                    <Settings />
                   </AppLayout>
                 </ProtectedRoute>
               }
