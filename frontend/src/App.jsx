@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { AuthProvider, useAuth } from './hooks/useAuth';
 import Header from './components/Layout/Header';
+import Footer from './components/Layout/Footer';
 import LoadingSpinner from './components/Common/LoadingSpinner';
 import Login from './pages/Login';
 import VerifyMagicLink from './pages/VerifyMagicLink';
@@ -13,6 +14,8 @@ import Dashboard from './pages/Dashboard';
 import TicketList from './pages/TicketList';
 import TicketDetail from './pages/TicketDetail';
 import Settings from './pages/Settings';
+import Terms from './pages/Terms';
+import Privacy from './pages/Privacy';
 
 // Create React Query client
 const queryClient = new QueryClient({
@@ -47,11 +50,12 @@ function ProtectedRoute({ children }) {
 // Main layout wrapper
 function AppLayout({ children }) {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 flex flex-col">
       <Header />
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {children}
       </main>
+      <Footer />
     </div>
   );
 }
@@ -65,6 +69,22 @@ function App() {
             {/* Public routes */}
             <Route path="/login" element={<Login />} />
             <Route path="/verify" element={<VerifyMagicLink />} />
+            <Route path="/terms" element={
+              <div className="min-h-screen bg-gray-50 flex flex-col">
+                <main className="flex-1">
+                  <Terms />
+                </main>
+                <Footer />
+              </div>
+            } />
+            <Route path="/privacy" element={
+              <div className="min-h-screen bg-gray-50 flex flex-col">
+                <main className="flex-1">
+                  <Privacy />
+                </main>
+                <Footer />
+              </div>
+            } />
 
             {/* Protected routes */}
             <Route

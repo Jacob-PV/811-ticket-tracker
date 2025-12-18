@@ -33,6 +33,9 @@ export default function Login() {
             <p className="text-gray-600">
               Never miss a ticket expiration
             </p>
+            <p className="text-xs text-gray-500 mt-4 italic">
+              Independent beta product. Feedback does not create ownership, partnership, or work-for-hire relationships.
+            </p>
           </div>
           <LoginForm />
         </div>
