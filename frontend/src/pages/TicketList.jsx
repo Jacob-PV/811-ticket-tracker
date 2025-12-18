@@ -36,10 +36,14 @@ export default function TicketList() {
 
   const handleCreateTicket = async (formData) => {
     try {
+      console.log('Submitting ticket data:', formData);
       await createTicket.mutateAsync(formData);
       setShowCreateModal(false);
     } catch (err) {
-      alert(err.message);
+      console.error('Ticket creation error:', err);
+      console.error('Error response:', err.response?.data);
+      const errorMsg = err.response?.data?.detail || err.message || 'Failed to create ticket';
+      alert(errorMsg);
     }
   };
 
